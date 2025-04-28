@@ -19,8 +19,8 @@ namespace dbOperationEFcore.Controllers
         [HttpGet]
         public async Task<IActionResult> GetLanguage()
         {
-            var result = await _dbContext.Languages.ToListAsync();
-            return Ok(result);
+            var result = await _dbContext.Languages.AsNoTracking().ToListAsync();
+            return Ok(result); //asnotracting is used to improve performance. and it is used to avoid tracking of the entity.
         }
 
         [HttpPost]
