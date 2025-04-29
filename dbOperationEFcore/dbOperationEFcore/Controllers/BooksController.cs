@@ -30,6 +30,30 @@ namespace dbOperationEFcore.Controllers
             await dbContext.SaveChangesAsync();
             return Ok(book);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetDataRelatedTables()
+        {
+            var result = await dbContext.books.Select(x => new
+            {
+                id = x.Id,
+                title = x.Title,
+                author = x.author != null ? x.author.Name : "NA",
+                language = x.language,
+            }).ToListAsync(); // select only the required data from the table.
+
+            return Ok(result);
+        }
+        //[HttpGet]
+        //public async Task<IActionResult> GetDataRelatedTable()
+        //{
+        //    var result = await dbContext.books
+        //        .Include(x => x.language) // include related data from other tables
+        //        .ToListAsync(); // if you want to get all data from the table.
+
+        //    return Ok(result);
+        //}
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBook(int id, book book)
         {

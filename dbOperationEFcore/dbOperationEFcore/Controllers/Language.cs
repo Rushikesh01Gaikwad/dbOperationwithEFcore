@@ -23,6 +23,8 @@ namespace dbOperationEFcore.Controllers
             return Ok(result); //asnotracting is used to improve performance. and it is used to avoid tracking of the entity.
         }
 
+        
+
         [HttpPost]
         public async Task<IActionResult> getLanguageById( List<int> id)
         {
