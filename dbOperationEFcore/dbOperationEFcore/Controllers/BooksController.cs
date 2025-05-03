@@ -42,7 +42,15 @@ namespace dbOperationEFcore.Controllers
                 language = x.language,
             }).ToListAsync(); // select only the required data from the table.
 
-            return Ok(result);
+            var books = await dbContext.books.FromSql($"Select top 2 * from books")
+                .ToListAsync(); // select only the required data from the table it is the linq method. 
+            //used for do not expose the column the of table. it is used for security purpost.
+
+            var books1 = await dbContext.books.FromSqlRaw($"Select top 2 * from books")
+                .ToListAsync(); // select only the required data from the table. it is also linq method.
+            //but sometime we need to use the data of that column so we use the from sql raw.
+
+            return Ok(books);
         }
         //[HttpGet]
         //public async Task<IActionResult> GetDataRelatedTable()
